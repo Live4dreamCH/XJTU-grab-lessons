@@ -7,9 +7,18 @@ from selenium import webdriver
 
 # 获取Cookie
 def get_cookie(my_id, my_psw):
-    driver = webdriver.Chrome()
-    driver.minimize_window()
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_experimental_option('excludeSwitches', ['enable-automation'])
+    # options.add_argument("start-maximized")
+    driver = webdriver.Chrome(options=options)
+    # driver = webdriver.Chrome()
+    # driver.minimize_window()
     driver.get("http://xkfw.xjtu.edu.cn/")
+    # print(driver.current_url)
+    driver.get_screenshot_as_file("111.png")
+    # print(driver.page_source)
     user_name = driver.find_element_by_xpath(r'//*[@id="form1"]/input[1]')
     user_name.send_keys(my_id)
     pass_word = driver.find_element_by_xpath(r'//*[@id="form1"]/input[2]')
@@ -206,7 +215,6 @@ def show_my_courses(headers):
 
 if __name__ == "__main__":  # 控制台界面部分
     # 输入用户信息
-    # User_name = input('请输入NetID：')
     student_ID = input('请输入学号:')
     Pass_word = input('请输入密码:')
 
